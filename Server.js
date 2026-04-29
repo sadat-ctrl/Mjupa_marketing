@@ -15,8 +15,12 @@ const multer = require('multer');
 const app = express();
 app.use(cors());
 app.use(express.json());
-
-mongoose.connect('mongodb://127.0.0.1/mjupa');
+mongoose.connect(process.env.MONGO_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => console.log("MongoDB Connected"))
+.catch(err => console.log(err));
 
 const upload = multer({ dest: 'uploads/' });
 const SECRET = 'mjupa_secret';
